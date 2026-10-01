@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Google Fonts ── */
+/* Loaded in index.html */
+
+/* ── CSS Variables ── */
+:root {
+  --accent: #00e6a0;
+  --accent2: #00b8ff;
+  --glow: rgba(0, 230, 160, 0.15);
+  --glow2: rgba(0, 184, 255, 0.12);
+}
+
+.dark {
+  --bg: #080c10;
+  --bg2: #0d1117;
+  --surface: #141c25;
+  --surface2: #1a2432;
+  --border: rgba(0, 230, 160, 0.12);
+  --border2: rgba(255,255,255,0.06);
+  --text: #e8edf2;
+  --text2: #8fa3b8;
+  --text3: #546a82;
+  --heading: #f0f6ff;
+  --card: #111820;
+  --card-hover: #16202e;
+}
+
+/* ── Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+::selection { background: #00e6a0; color: #000; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0d1117; }
+::-webkit-scrollbar-thumb { background: #00e6a0; border-radius: 10px; }
+
+/* ── Noise overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
+
+/* ── Grid background ── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Terminal cursor blink ── */
+@keyframes termBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: #00e6a0;
+  vertical-align: middle;
+  margin-left: 2px;
+  animation: termBlink 1.2s step-end infinite;
+}
+
+/* ── Floating animation ── */
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.float-anim { animation: floatAnim 6s ease-in-out infinite; }
+
+/* ── Pulse glows ── */
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.7; }
+}
+.pulse-glow { animation: pulseGlow 8s ease-in-out infinite; }
+.pulse-glow-2 { animation: pulseGlow 10s ease-in-out infinite reverse; }
+
+/* ── Status dot blink ── */
+@keyframes dotBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.status-dot { animation: dotBlink 2s ease-in-out infinite; }
+
+/* ── Fade-up scroll animation ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-up.delay-1 { transition-delay: 0.1s; }
+.fade-up.delay-2 { transition-delay: 0.2s; }
+.fade-up.delay-3 { transition-delay: 0.3s; }
+.fade-up.delay-4 { transition-delay: 0.4s; }
+
+/* ── Project card top bar ── */
+.project-card-bar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00e6a0, #00b8ff);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+  border-radius: 12px 12px 0 0;
+}
+.project-card-bar:hover::before { transform: scaleX(1); }
+
+/* ── Research card number watermark ── */
+.research-num::before {
+  content: attr(data-num);
+  position: absolute;
+  top: 16px; right: 20px;
+  font-family: 'Syne', sans-serif;
+  font-size: 4rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  pointer-events: none;
+}
